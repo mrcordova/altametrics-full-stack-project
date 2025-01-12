@@ -28,7 +28,7 @@ model Invoice {
   amount Float
   due_date DateTime
   created_at DateTime @default(now())
-  description String?
+  description String
   user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id Int
   paid Boolean @default(false)
