@@ -1,12 +1,14 @@
 import { Injectable } from "@nestjs/common";
+import { PrismaService } from "src/prisma/prisma.service";
 
 @Injectable()
 export class InvoicesService {
-  findAll() {
-    return `This action returns all invoices`;
+  constructor(private prisma: PrismaService) {}
+  findAll(user_id: number) {
+    return this.prisma.invoice.findMany({ where: { user_id } });
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} invoice`;
+    return this.prisma.invoice.findUnique({ where: { id } });
   }
 }
