@@ -8,7 +8,7 @@ export class InvoicesService {
     return this.prisma.invoice.findMany({ where: { user_id } });
   }
 
-  findOne(id: number) {
-    return this.prisma.invoice.findUnique({ where: { id } });
+  findOne(user_id: number, id: number) {
+    return this.prisma.invoice.findUnique({ where: { user_id, id } });
   }
 }

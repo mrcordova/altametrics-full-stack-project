@@ -16,7 +16,7 @@ export class InvoicesController {
 
   @Get(":id")
   @ApiOkResponse({ type: InvoiceEntity })
-  findOne(@Param("id") id: string) {
-    return this.invoicesService.findOne(+id);
+  findOne(@Query("user_id") user_id: string, @Param("id") id: string) {
+    return this.invoicesService.findOne(parseInt(user_id), parseInt(id));
   }
 }
