@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Query } from "@nestjs/common";
+import { Controller, Get, Param, Query, ParseIntPipe } from "@nestjs/common";
 import { InvoicesService } from "./invoices.service";
 import { ApiOkResponse, ApiTags } from "@nestjs/swagger";
 import { InvoiceEntity } from "./entities/invoice.entity";
@@ -10,13 +10,16 @@ export class InvoicesController {
 
   @Get()
   @ApiOkResponse({ type: InvoiceEntity, isArray: true })
-  findAll(@Query("user_id") user_id: string) {
-    return this.invoicesService.findAll(parseInt(user_id));
+  findAll(@Query("user_id", ParseIntPipe) user_id: number) {
+    return this.invoicesService.findAll(user_id);
   }
 
   @Get(":id")
   @ApiOkResponse({ type: InvoiceEntity })
-  findOne(@Query("user_id") user_id: string, @Param("id") id: string) {
-    return this.invoicesService.findOne(parseInt(user_id), parseInt(id));
+  findOne(
+    @Query("user_id", ParseIntPipe) user_id: number,
+    @Param("id", ParseIntPipe) id: number
+  ) {
+    return this.invoicesService.findOne(user_id, id);
   }
 }
