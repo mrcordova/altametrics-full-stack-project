@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 async function main() {
   //create users
   const user1 = await prisma.user.upsert({
-    where: { id: 1 },
+    where: { email: "batman#1@gmail.com" },
     create: {
       email: "batman#1@gmail.com",
       password: "marthaWayne",
@@ -14,7 +14,7 @@ async function main() {
     update: {},
   });
   const user2 = await prisma.user.upsert({
-    where: { id: 2 },
+    where: { email: "man_of_steel@gmail.com" },
     create: {
       email: "man_of_steel@gmail.com",
       password: "PaKent",
@@ -32,9 +32,11 @@ async function main() {
       due_date: new Date("2023-10-31T00:00:00Z"),
       amount: 228.75,
       paid: true,
-      user_id: 1,
+      user_id: user1.id,
     },
-    update: {},
+    update: {
+      user_id: user1.id,
+    },
   });
   const invoice2 = await prisma.invoice.upsert({
     where: { id: 2 },
@@ -44,9 +46,11 @@ async function main() {
       due_date: new Date("2023-10-31T00:00:00Z"),
       amount: 228.75,
       paid: false,
-      user_id: 1,
+      user_id: user1.id,
     },
-    update: {},
+    update: {
+      user_id: user1.id,
+    },
   });
   const invoice3 = await prisma.invoice.upsert({
     where: { id: 3 },
@@ -56,9 +60,9 @@ async function main() {
       due_date: new Date("2023-10-31T00:00:00Z"),
       amount: 0,
       paid: true,
-      user_id: 1,
+      user_id: user1.id,
     },
-    update: {},
+    update: { user_id: user1.id },
   });
   const invoice4 = await prisma.invoice.upsert({
     where: { id: 4 },
@@ -68,9 +72,9 @@ async function main() {
       due_date: new Date("2023-10-31T00:00:00Z"),
       amount: 0,
       paid: true,
-      user_id: 2,
+      user_id: user2.id,
     },
-    update: {},
+    update: { user_id: user2.id },
   });
 
   console.log(user1, user2, invoice1, invoice2, invoice3, invoice4);
