@@ -6,7 +6,7 @@ import { PrismaService } from "src/prisma/prisma.service";
 export class AuthService {
   constructor(private prisma: PrismaService) {}
 
-  create(createAuthDto: CreateAuthDto) {
-    return "This action adds a new auth";
+  login(createAuthDto: CreateAuthDto) {
+    return this.prisma.user.create({ data: createAuthDto });
   }
 }
