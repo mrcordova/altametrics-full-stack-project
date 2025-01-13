@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
+import { useSelector } from "react-redux"
 
 interface Invoice {
   amount: number
@@ -19,14 +20,25 @@ interface Invoice {
 }
 
 const Home: React.FC = () => {
+  const token = useSelector((state: any) => state.auth.token)
   const fetchInvoices = async (): Promise<Invoice[]> => {
-    const response = await fetch("http://localhost:3000/invoices?user_id=3")
+    if (!token) {
+      console.error("Token is missing")
+      throw new Error("Token is missing ")
+    }
+    const response = await fetch("http://localhost:3000/invoices", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
     if (!response.ok) throw new Error("Failed to fetch invoices")
     return response.json()
   }
   const { data, isLoading, error } = useQuery<Invoice[], Error>({
-    queryKey: ["invoices"],
+    queryKey: ["invoices", token],
     queryFn: fetchInvoices,
+    enabled: !!token,
   })
   if (isLoading) return <p>Loading...</p>
   if (error) return <p>Error: {error.message}</p>

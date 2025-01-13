@@ -7,8 +7,10 @@ const Login: React.FC = () => {
   const dispath = useDispatch<AppDispatch>()
   const navigate = useNavigate()
 
-  const handleLogin = () => {
-    dispath(login({ name: "John Doe", email: "john@example.com" }))
+  const handleLogin = async () => {
+    await dispath(
+      login({ password: "marthaWayne", email: "batman#1@gmail.com" }),
+    )
     navigate("/invoices")
   }
   return (

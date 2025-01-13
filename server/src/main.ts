@@ -9,7 +9,11 @@ import {
 import { PrismaClientExceptionFilter } from "./prisma-client-exception/prisma-client-exception.filter";
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
+  app.enableCors({
+    origin: "http://localhost:5175", // Add the frontend URL here
+    methods: "GET,POST,PUT,DELETE", // Allowed HTTP methods
+    allowedHeaders: "Content-Type, Authorization", // Allowed headers
+  });
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
 

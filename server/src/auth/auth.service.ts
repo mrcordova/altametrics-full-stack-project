@@ -24,11 +24,15 @@ export class AuthService {
     }
 
     const isPasswordValid = user.password === password;
+
     if (!isPasswordValid) {
       throw new UnauthorizedException("Invalid password");
     }
 
-    return { accessToken: this.jwtService.sign({ userId: user.id }) };
+    const accessToken = {
+      accessToken: this.jwtService.sign({ userId: user.id }),
+    };
+    return accessToken;
   }
 
   findOne(id: number) {

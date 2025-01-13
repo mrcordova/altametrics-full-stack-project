@@ -22,18 +22,15 @@ export class InvoicesController {
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: InvoiceEntity, isArray: true })
-  findAll(@Query("user_id", ParseIntPipe) user_id: number) {
-    return this.invoicesService.findAll(user_id);
+  findAll() {
+    return this.invoicesService.findAll();
   }
 
   @Get(":id")
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: InvoiceEntity })
-  findOne(
-    @Query("user_id", ParseIntPipe) user_id: number,
-    @Param("id", ParseIntPipe) id: number
-  ) {
-    return this.invoicesService.findOne(user_id, id);
+  findOne(@Param("id", ParseIntPipe) id: number) {
+    return this.invoicesService.findOne(id);
   }
 }
