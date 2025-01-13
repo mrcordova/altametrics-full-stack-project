@@ -50,18 +50,65 @@ const Home: React.FC = () => {
   if (error) return <p>Error: {error.message}</p>
   return (
     <div>
-      <h1>Invoices</h1>
-      <ul>
-        {data?.map(invoice => (
-          <li
-            key={invoice.id}
-            data-id={invoice.id}
-            onClick={() => showModal(invoice.id)}
-          >
-            {invoice.vendor_name}
-          </li>
-        ))}
-      </ul>
+      <div className="p-6">
+        <h1 className="text-2xl font-bold mb-4">Invoices</h1>
+        <div className="overflow-x-auto">
+          <table className="min-w-full border-collapse border border-gray-300">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="border border-gray-300 px-4 py-2 text-left">
+                  Date
+                </th>
+                <th className="border border-gray-300 px-4 py-2 text-left">
+                  Payee
+                </th>
+                <th className="border border-gray-300 px-4 py-2 text-left">
+                  Description
+                </th>
+                <th className="border border-gray-300 px-4 py-2 text-left">
+                  Due Date
+                </th>
+                <th className="border border-gray-300 px-4 py-2 text-left">
+                  Amount
+                </th>
+                <th className="border border-gray-300 px-4 py-2 text-left">
+                  Status
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {data?.map(invoice => (
+                <tr
+                  key={invoice.id}
+                  className="hover:bg-gray-100"
+                  onClick={() => showModal(invoice.id)}
+                >
+                  <td className="border border-gray-300 px-4 py-2">
+                    {new Date(invoice.created_at).toLocaleDateString()}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {invoice.vendor_name}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {invoice.description}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {new Date(invoice.due_date).toLocaleDateString()}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {invoice.amount === 0
+                      ? ""
+                      : `$${invoice.amount.toFixed(2)}`}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {invoice.paid ? "Paid" : "Open"}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
       <Modal />
     </div>
   )
