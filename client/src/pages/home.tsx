@@ -1,5 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { openModal } from "../features/modal/modalSlice"
+import Modal from "./modal"
 
 interface Invoice {
   amount: number
@@ -21,6 +23,7 @@ interface Invoice {
 
 const Home: React.FC = () => {
   const token = useSelector((state: any) => state.auth.token)
+  const dispatch = useDispatch()
   const fetchInvoices = async (): Promise<Invoice[]> => {
     if (!token) {
       console.error("Token is missing")
@@ -40,14 +43,26 @@ const Home: React.FC = () => {
     queryFn: fetchInvoices,
     enabled: !!token,
   })
+  const showModal = async (id: number) => {
+    dispatch(openModal(id))
+  }
   if (isLoading) return <p>Loading...</p>
   if (error) return <p>Error: {error.message}</p>
   return (
     <div>
       <h1>Invoices</h1>
       <ul>
-        {data?.map(invoice => <li key={invoice.id}>{invoice.vendor_name}</li>)}
+        {data?.map(invoice => (
+          <li
+            key={invoice.id}
+            data-id={invoice.id}
+            onClick={() => showModal(invoice.id)}
+          >
+            {invoice.vendor_name}
+          </li>
+        ))}
       </ul>
+      <Modal />
     </div>
   )
 }
