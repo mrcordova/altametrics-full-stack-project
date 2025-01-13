@@ -28,7 +28,7 @@ export const fetchInvoice = createAsyncThunk(
     }
 
     const data = response.json()
-    console.log(data)
+
     return data
   },
 )

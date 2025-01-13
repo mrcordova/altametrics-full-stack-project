@@ -1,99 +1,214 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# NestJS Backend API with Prisma and PostgreSQL
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This project demonstrates a basic backend API built using **Node.js**, **NestJS**, **Prisma ORM**, and **PostgreSQL**, featuring JWT-based authentication, and Docker for setup.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## Features
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### Authentication
 
-## Project setup
+- **Login endpoint** to authenticate users and provide a JWT token: `/auth/login`.
 
-```bash
-$ npm install
-```
+### Invoice Management
 
-## Compile and run the project
+- **Fetch all invoices**: `/invoices`
+- **Fetch a specific invoice**: `/invoices/:id`
 
-```bash
-# development
-$ npm run start
+### Validation
 
-# watch mode
-$ npm run start:dev
+- Zod for DTO validation to ensure robust and error-free data handling.
 
-# production mode
-$ npm run start:prod
-```
+### Database
 
-## Run tests
+- PostgreSQL database integration with Prisma ORM.
+- Seeded demo data for authentication and invoices.
+
+---
+
+## Prerequisites
+
+- **Node.js** (>= v16)
+- **Docker** and **Docker Compose**
+
+---
+
+## Installation
+
+### 1. Clone the Repository
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+git clone <repository-url>
+cd <repository-name>
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### 2. Install Dependencies
 
 ```bash
-$ npm install -g mau
-$ mau deploy
+npm install
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### 3. Environment Variables
 
-## Resources
+Create a `.env` file in the root directory with the following configuration:
 
-Check out a few resources that may come in handy when working with NestJS:
+```env
+DATABASE_URL="postgresql://noahCordova:myPassword@localhost:5432/mydb?schema=public"
+JWT_SECRET='zjP9h6ZIRLoSKCRj'
+PORT=3000
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### 4. Docker Setup
 
-## Support
+Start the PostgreSQL database:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```bash
+docker-compose up -d
+```
 
-## Stay in touch
+### 5. Apply Prisma Migrations
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```bash
+npx prisma migrate dev
+```
 
-## License
+### 6. Seed the Database
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+```bash
+npx prisma db seed
+```
+
+### 7. Start the Application
+
+```bash
+npm run start:dev
+```
+
+---
+
+## API Endpoints
+
+[Api Documention](http://localhost:3000/api)
+
+### Authentication
+
+#### POST `/auth/login`
+
+- **Description**: Authenticates the user and provides a JWT token.
+- **Request Body**:
+
+```json
+{
+  "email": "batman#1@gmail.com",
+  "password": "marthaWayne"
+}
+```
+
+- **Response**:
+
+```json
+{
+  "access_token": "<JWT_TOKEN>"
+}
+```
+
+### Invoices
+
+#### GET `/invoices`
+
+- **Description**: Fetches all invoices.
+- **Headers**:
+
+```http
+Authorization: Bearer <JWT_TOKEN>
+```
+
+#### GET `/invoices/:id`
+
+- **Description**: Fetches details of a specific invoice.
+- **Headers**:
+
+```http
+Authorization: Bearer <JWT_TOKEN>
+```
+
+---
+
+## File Structure
+
+```
+.
+├── src
+│   ├── app.module.ts          # Root module
+│   ├── main.ts                # Application entry point
+│   ├── auth                   # Authentication module
+│   │   ├── auth.module.ts
+│   │   ├── auth.service.ts
+│   │   ├── auth.controller.ts
+│   │   └── jwt.strategy.ts
+│   ├── invoices               # Invoice module
+│   │   ├── invoices.module.ts
+│   │   ├── invoices.service.ts
+│   │   ├── invoices.controller.ts
+│   │   └── dto
+│   │       ├── create-invoice.dto.ts
+│   │       └── update-invoice.dto.ts
+│   └── prisma                 # Prisma integration
+│   |   ├── prisma.module.ts
+│   |   ├── prisma.service.ts
+│   └── prisma-client-exception  #custom exception filter
+│       ├── prisma-client-exception.filter.ts
+│
+├── prisma
+│   ├── schema.prisma          # Prisma schema definition
+│   └── seed.ts                # Database seed file
+├── docker-compose.yml         # Docker setup
+├── package.json               # Project configuration
+└── README.md                  # Documentation
+```
+
+---
+
+## Seeded Data
+
+### Demo User
+
+- **Email**: `batman#1@gmail.com`
+- **Password**: `marthaWayne`
+
+### Demo Invoices
+
+- Seeded with example invoices for demonstration purposes.
+
+---
+
+## Development Commands
+
+- **Start the app**:
+
+```bash
+npm run start:dev
+```
+
+- **Lint the code**:
+
+```bash
+npm run lint
+```
+
+- **Format the code**:
+
+```bash
+npm run format
+```
+
+---
+
+## Technologies Used
+
+- **Node.js**
+- **NestJS**
+- **Prisma ORM**
+- **PostgreSQL**
+- **Docker**
+- **JWT Authentication**
